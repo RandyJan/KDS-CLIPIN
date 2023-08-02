@@ -1,0 +1,17 @@
+{
+    "name": "CLIPIN",
+    "short_name": "CLIPIN",
+    "start_url": "/",
+    "background_color": "#FFFFFF",
+    "description": "CLIPIN",
+    "display": "fullscreen",
+    "theme_color": "#6777ef",
+    "icons": [
+        {
+            "src": "images/A.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ]
+}
