@@ -198,7 +198,7 @@ div.scroll {
                 @csrf {{ csrf_field() }}
                 <input type="hidden" name="completeid" id="completeid" value="" required>
                 <input type="hidden" name="compprod" id="compprod" value="">
-                <input type="hidden" name="composdid" id="composdid" value="">
+                {{-- <input type="hidden" name="composdid" id="composdid" value=""> --}}
 
                 <span class="input-group-text" id="inputGroup-sizing-default">Input number:</span>
                 <input type="number" name="completeno" class="form-control" value="" min="0" placeholder="type here..." required>
@@ -256,18 +256,18 @@ div.scroll {
                             <button type="submit" class='btn btn-primary btn-hover p-3 btn-sm' style="width:60px;font-size:8px" id="walkinbtn" onclick="walkinfetchid({{$user->ORDERSLIPNO}},{{$user->PRODUCT_ID}})">Walk-in</button>
 
 
-                            @if($user->AVAILABLE == 1)
-                            <form action="/completesingle" method="POST">
-                                @csrf
-                                <input type="hidden" name="completenob" id="completenob" value="1">
-                                <input type="hidden" name = "completeidb" id="completeidb" value="">
-                                
-                                <input type="hidden" name="compprodb" id="compprodb" value="">
-                                <button type="submit" class='btn btn-success btn-sm p-3 btn-hover ' style="width:60px;font-size:8px" onclick="completesinglefetchid({{$user->ORDERSLIPNO}},{{$user->ORDERSLIPDETAILID}})" >Complete</button>
-                            </form>
-                            @else
+                            @if($user->AVAILABLE != 1)
                             <button type="submit" class='btn btn-success btn-sm p-3 btn-hover ' style="width:60px;font-size:8px" onclick="completefetchid({{$user->ORDERSLIPNO}},{{$user->ORDERSLIPDETAILID}})" >Complete</button>
 
+                            @else
+                          <form action="/completesingle" method="POST">
+                                @csrf {{ csrf_field() }}
+                                <input type="hidden" name="completenob" id="completenob" value="1">
+                                <input type="hidden" name = "completeidb" id="completeidb" value="{{$user->ORDERSLIPNO}}">
+
+                                <input type="hidden" name="compprodb" id="compprodb" value="{{$user->ORDERSLIPDETAILID}}">
+                                <button type="submit" class='btn btn-success btn-sm p-3 btn-hover ' style="width:60px;font-size:8px" >Complete</button>
+                            </form>
 
                         @endif
 
@@ -328,7 +328,7 @@ div.scroll {
 
     }
 
-    function walkinfetchid(id,prod,) {
+    function walkinfetchid(id,prod) {
         $('#walkinmodal').modal('show');
         $('#walkinid').val(id);
         $('#walkprod').val(prod);
@@ -339,14 +339,8 @@ div.scroll {
         $('#completemodal').modal('show');
         $('#completeid').val(id);
         $('#compprod').val(prod);
-       
 
-    }
-    function completesinglefetchid(id,prod) {
 
-        $('#completeidb').val(id);
-        $('#compprodb').val(prod);
-       
 
     }
 

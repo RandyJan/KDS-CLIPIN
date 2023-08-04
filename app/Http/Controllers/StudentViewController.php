@@ -164,7 +164,8 @@ dbo.OrderSLipDetails.PRODUCT_ID=dbo.parts.PRODUCT_ID
     $completeid = $request->input('completeid');
     $completeno = $request->input('completeno');
     $compprod = $request->input('compprod');
-   
+    // $composdid = $request->input('composdid');
+
     $status = 'C';
 
 DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$completeid,$compprod]);
@@ -182,7 +183,7 @@ $deliveredqty = DB::table('dbo.OrderSLipDetails')
 
 
     if($available==$deliveredqty){
-        DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =?, STATUS = ? WHERE ORDERSLIPNO = ? and PRODUCT_ID = ? and ORDERSLIPDETAILD = ?',[$completeno,$status,$completeid,$compprod,$composdid]);
+        DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =?, STATUS = ? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$status,$completeid,$compprod]);
 
         return redirect()->back();
     }
@@ -202,8 +203,9 @@ $deliveredqty = DB::table('dbo.OrderSLipDetails')
     $completeid = $request->input('completeidb');
     $completeno = $request->input('completenob');
     $compprod = $request->input('compprodb');
-    
+
     $status = 'C';
+    print "1";
     DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =?,STATUS = ? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$status,$completeid,$compprod]);
     return redirect()->back();
 
