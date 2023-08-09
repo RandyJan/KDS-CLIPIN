@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use DB;
 use Illuminate\Http\Request;
 use PhpParser\Node\Stmt\ElseIf_;
+use PhpParser\Node\Stmt\Return_;
+use Illuminate\Support\Facades\DB;
 
 class StudentViewController extends Controller
 {
@@ -167,17 +168,28 @@ dbo.OrderSLipDetails.PRODUCT_ID=dbo.parts.PRODUCT_ID
     // $composdid = $request->input('composdid');
 
     $status = 'C';
-
-DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$completeid,$compprod]);
-
-$available = DB::table('dbo.OrderSLipDetails')
+    $available = DB::table('dbo.OrderSLipDetails')
 ->where('ORDERSLIPNO', $completeid)
-->where('PRODUCT_ID', $compprod)
+->where('ORDERSLIPDETAILID', $compprod)
 ->value('AVAILABLE');
 $deliveredqty = DB::table('dbo.OrderSLipDetails')
 ->where('ORDERSLIPNO', $completeid)
-->where('PRODUCT_ID', $compprod)
+->where('ORDERSLIPDETAILID', $compprod)
 ->value('DELIVEREDQTY');
+
+
+if($completeno > $available){
+    return response()->json([
+        'status'=> 500,
+        'message'=>"error C cannot be greater than QTY"
+    ]);
+}
+else{
+
+
+DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$completeid,$compprod]);
+
+
 
 
 
@@ -187,15 +199,16 @@ $deliveredqty = DB::table('dbo.OrderSLipDetails')
 
         return redirect()->back();
     }
-    elseif($deliveredqty>$available){
+    // elseif($deliveredqty>$available){
 
-        return response()->json([
-            'status'=> 500,
-            'message'=>"C cannot be greater than QTY"
-        ]);
-    }
+    //     return response()->json([
+    //         'status'=> 500,
+    //         'message'=>"C cannot be greater than QTY"
+    //     ]);
+    // }
 
     return redirect()->back();
+}
 
 
  }
