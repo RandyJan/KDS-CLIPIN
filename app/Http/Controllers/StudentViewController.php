@@ -188,9 +188,14 @@ else{
 
 
 DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$completeid,$compprod]);
-
-
-
+$available = DB::table('dbo.OrderSLipDetails')
+->where('ORDERSLIPNO', $completeid)
+->where('ORDERSLIPDETAILID', $compprod)
+->value('AVAILABLE');
+$deliveredqty = DB::table('dbo.OrderSLipDetails')
+->where('ORDERSLIPNO', $completeid)
+->where('ORDERSLIPDETAILID', $compprod)
+->value('DELIVEREDQTY');
 
 
 
