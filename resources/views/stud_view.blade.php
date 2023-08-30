@@ -348,40 +348,40 @@ div.scroll {
         $('#loader').hide();
     })
 
-    // let previousRowCount = document.getElementById('thtable').rows.length;
-    var table = document.getElementById("thtable"); // replace "table-id" with the ID of your table
+
+    var table = document.getElementById("thtable");
 var count = 0;
 for (var i = 0; i < table.rows.length; i++) {
   var row = table.rows[i];
-  var cell = row.cells[2];   // replace "0" with the index of the cell you want to check
+  var cell = row.cells[2];
   var cellb = row.cells[4]
-  if (cell.innerHTML > 0 && cellb.innerHTML ==="") { // replace "value-to-check" with the value you want to count
+  if (cell.innerHTML > 0 && cellb.innerHTML ==="") {
     count++;
 
   }
 }
 
 var previousRowCount = count;
-console.log(previousRowCount);
+
 
     function checkRowCount() {
 
-        var table = document.getElementById("thtable"); // replace "table-id" with the ID of your table
+        var table = document.getElementById("thtable");
 var count = 0;
 for (var i = 0; i < table.rows.length; i++) {
   var row = table.rows[i];
-  var cell = row.cells[2];   // replace "0" with the index of the cell you want to check
+  var cell = row.cells[2];
   var cellb = row.cells[4]
-  if (cell.innerHTML > 0 && cellb.innerHTML ==="") { // replace "value-to-check" with the value you want to count
+  if (cell.innerHTML > 0 && cellb.innerHTML ==="") {
     count++;
 
   }
 }
 
 var currentRowCount = count;
-console.log(currentRowCount);
-        //this
-        // const currentRowCount = document.getElementById('thtable').rows.length;
+
+
+
         if (currentRowCount > previousRowCount) {
             const audio = new Audio('Audio/notification.mp3');
             audio.play();
@@ -389,7 +389,7 @@ console.log(currentRowCount);
             $('#recievedmodal').modal('show');
         }
         previousRowCount = currentRowCount;
-    }
+    }0
 
     // Call the checkRowCount function every 2 seconds
     setInterval(checkRowCount, 2000);
