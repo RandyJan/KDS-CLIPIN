@@ -168,14 +168,15 @@ dbo.OrderSLipDetails.PRODUCT_ID=dbo.parts.PRODUCT_ID
     // $composdid = $request->input('composdid');
 
     $status = 'C';
+
     $available = DB::table('dbo.OrderSLipDetails')
 ->where('ORDERSLIPNO', $completeid)
 ->where('ORDERSLIPDETAILID', $compprod)
 ->value('AVAILABLE');
-$deliveredqty = DB::table('dbo.OrderSLipDetails')
-->where('ORDERSLIPNO', $completeid)
-->where('ORDERSLIPDETAILID', $compprod)
-->value('DELIVEREDQTY');
+// $deliveredqty = DB::table('dbo.OrderSLipDetails')
+// ->where('ORDERSLIPNO', $completeid)
+// ->where('ORDERSLIPDETAILID', $compprod)
+// ->value('DELIVEREDQTY');
 
 
 if($completeno > $available){
@@ -184,36 +185,25 @@ if($completeno > $available){
         'message'=>"error C cannot be greater than QTY"
     ]);
 }
-else{
-
-
 DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$completeid,$compprod]);
-$available = DB::table('dbo.OrderSLipDetails')
+$availableb = DB::table('dbo.OrderSLipDetails')
 ->where('ORDERSLIPNO', $completeid)
 ->where('ORDERSLIPDETAILID', $compprod)
 ->value('AVAILABLE');
-$deliveredqty = DB::table('dbo.OrderSLipDetails')
+$deliveredqtyb = DB::table('dbo.OrderSLipDetails')
 ->where('ORDERSLIPNO', $completeid)
 ->where('ORDERSLIPDETAILID', $compprod)
 ->value('DELIVEREDQTY');
 
-
-
-    if($available==$deliveredqty){
+    if($availableb==$deliveredqtyb){
         DB::update('UPDATE dbo.OrderSLipDetails SET DELIVEREDQTY =?, STATUS = ? WHERE ORDERSLIPNO = ? and ORDERSLIPDETAILID = ?',[$completeno,$status,$completeid,$compprod]);
 
         return redirect()->back();
     }
-    // elseif($deliveredqty>$available){
 
-    //     return response()->json([
-    //         'status'=> 500,
-    //         'message'=>"C cannot be greater than QTY"
-    //     ]);
-    // }
 
     return redirect()->back();
-}
+
 
 
  }
